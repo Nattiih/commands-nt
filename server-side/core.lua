@@ -61,7 +61,7 @@ local function ApplyPunishment(source,passport,remainingSeconds)
 		end
 
 		ActiveTimers[passport] = nil
-		vRP.Execute("nt_punishment/RemovePunishment",{ passport = passport })
+		vRP.Query("nt_punishment/RemovePunishment",{ passport = passport })
 
 		local currentSource = GetSourceFromPassport(passport)
 		if currentSource then
@@ -103,7 +103,7 @@ RegisterCommand("punir",function(source,args)
 
 	local endTime = os.time() + duration
 
-	vRP.Execute("nt_punishment/SetPunishment",{
+	vRP.Query("nt_punishment/SetPunishment",{
 		passport = targetPassport,
 		end_time = endTime,
 		applied_by = adminPassport,
@@ -138,7 +138,7 @@ RegisterCommand("despunir",function(source,args)
 		return
 	end
 
-	vRP.Execute("nt_punishment/RemovePunishment",{ passport = targetPassport })
+	vRP.Query("nt_punishment/RemovePunishment",{ passport = targetPassport })
 	ActiveTimers[targetPassport] = nil
 
 	TriggerClientEvent("nt_punishment:Stop",targetSource)
@@ -163,7 +163,7 @@ function Punishment.CheckPunishment()
 	local now = os.time()
 
 	if endTime <= now then
-		vRP.Execute("nt_punishment/RemovePunishment",{ passport = passport })
+		vRP.Query("nt_punishment/RemovePunishment",{ passport = passport })
 		return
 	end
 
